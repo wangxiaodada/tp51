@@ -1,0 +1,39 @@
+*{
+    margin: 0 auto;
+}
+
+.file{
+    margin: 0 auto;
+    width: 100px;
+    height:100px;
+    position: relative;
+    opacity: 0;
+}
+
+.div_img_opacity{
+    width: 240px;
+    height:170px;
+    float: left;
+    /*border: 1px solid #b2e2fa;*/
+}
+
+.div01{
+    /*border: 1px solid #b2e2fa;*/
+    margin: 2px;
+    padding: 20px
+}
+
+.div_img_opacity div{
+    width: 100px;
+    height:100px;
+    position: relative;
+}
+
+.div_div_img{
+    top: 35px;
+}
+
+.div_div_file{
+    top: -65px;
+}
+

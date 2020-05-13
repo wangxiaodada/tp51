@@ -1,0 +1,42 @@
+*{
+    margin: 0 auto;
+}
+body{
+    min-width: 500px;
+    background: #dbdbdb;
+}
+label{
+    font-size: 16px;
+}
+.login_border{
+    background: white;
+    margin-top: 200px;
+    padding: 20px;
+    border: 1px solid white;
+    border-radius: 8px;
+    width: 300px;
+    height: 230px;
+}
+.button_div{
+    height: 38px;
+    width: 80px;
+    /*margin-top: 15px;*/
+}
+.div{
+    width: 300px;
+    margin-top: 5px;
+}
+.button_sub{
+    height: 38px;
+    width: 80px;
+}
+label{
+    display: inline-block !important;
+}
+.yzm{
+    width: 100px !important;
+    display: inline-block;
+}
+form{
+    margin-bottom: 15px;
+}

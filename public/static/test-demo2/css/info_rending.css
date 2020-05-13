@@ -1,0 +1,197 @@
+@CHARSET "UTF-8";
+
+body {
+	background: #525659; font-family: 'Microsoft Yahei'; font-size: 14px;
+}
+
+p {
+	margin: 0;
+}
+
+.paper_A4 {
+	width: 794px; height: 1123px; margin: 0 auto; page-break-before: auto; page-break-after: always; position: relative;
+	background: #fff; margin-top: 20px; box-shadow: #000 0px 0px 10px;
+}
+
+.pager_content {
+	position: absolute; top: 61.5px; left: 47px; width: 700px; height: 1000px;
+}
+
+/*封面*/
+.cover_title {
+	font-size: 34px; text-align: center; height: 150px; line-height: 150px; font-weight: bold; width: 100%;
+	margin-top: 20px;
+}
+
+.cover_table {
+	width: 50%; position: absolute; top: 180px; left: 200px;
+}
+
+.cover_lefttd {
+	font-size: 21px; text-align: right; vertical-align: bottom; width: 30%; height: 120px; padding: 10px 0;
+}
+
+.cover_righttd {
+	font-size: 21px; text-align: center; vertical-align: bottom; width: 70%; height: 120px; padding: 10px 0;
+	border-bottom: 2px solid #000;
+}
+
+.cover_date {
+	font-size: 21px; font-weight: bold; text-align: center; position: absolute; bottom: 130px; left: 0; width: 100%;
+}
+
+.cover_footer {
+	font-size: 21px; font-weight: bold; text-align: center; position: absolute; bottom: 90px; left: 0; width: 100%;
+}
+
+.cover_footer2 {
+	font-size: 21px; font-weight: bold; text-align: center; position: absolute; bottom: 50px; left: 0; width: 100%;
+}
+.cover_footer3 {
+	font-size: 16px; font-weight: bold; text-align: right; position: absolute; bottom: 00px; left: 0; width: 100%;
+}
+
+/*承诺书*/
+.undertaking-title {
+	font-family: 'SimHei'; font-size: 29px; width: 100%; text-align: center; margin-top: 40px;
+}
+
+.undertaking-text {
+	margin-top: 40px;
+}
+
+#undertaking p {
+	font-size: 21px; text-indent: 2em; line-height: 40px;
+}
+
+#undertaking p u {
+	font-size: 21px; line-height: 40px;
+}
+
+#undertaking p b {
+	font-size: 21px; line-height: 40px;
+}
+
+/*基本情况*/
+.baseinfo {
+	
+}
+
+.baseinfo-title {
+	width: 100%; width: 100%; text-align: center; font-weight: bold; font-size: 30px;
+}
+
+.baseinfo-table1 {
+	width: 100%; border-left: 1px solid #000; border-top: 1px solid #000; text-align: center; margin-top: 30px;
+}
+
+.baseinfo-table1 td {
+	border-right: 1px solid #000; border-bottom: 1px solid #000; vertical-align: middle; width: 11%; height: 45px;
+}
+
+/*定义最低高度，超过了则自动扩展*/
+.paper_A4_auto {
+	width: 794px; min-height: 1123px; margin: 0 auto; page-break-before: auto; page-break-after: always; position: relative;
+	background: #fff; margin-top: 20px; box-shadow: #000 0px 0px 10px;
+}
+
+.pager_content_auto {
+	width: 700px; min-height: 1000px; padding: 61.5px 47px;
+}
+
+/*学习培训经历*/
+.studyinfo-title {
+	width: 100%; width: 100%; text-align: center; font-weight: bold; font-size: 30px;
+}
+
+.studyinfo-subtitle {
+	text-align: center; font-size: 21px; margin-top: 10px;
+}
+
+.studyinfo-table {
+	border-top: 1px solid #000; border-left: 1px solid #000; width: 100%; text-align: center; margin-top: 20px;
+}
+
+.studyinfo-table th {
+	border-right: 1px solid #000; border-bottom: 1px solid #000; height: 40px; padding: 5px; vertical-align: middle;
+	font-weight: normal;
+}
+
+.studyinfo-table td {
+	border-right: 1px solid #000; border-bottom: 1px solid #000; padding: 5px; vertical-align: middle; height: 40px;
+}
+
+/*任现职前主要专业技术工作业绩登记*/
+.zc06info-table {
+	border-top: 1px solid #000; border-left: 1px solid #000; border-bottom: 1px solid #000; width: 100%; text-align: center;
+	margin-top: 20px;
+}
+
+.zc06info-table th {
+	border-right: 1px solid #000; border-bottom: 1px solid #000; height: 40px; padding: 5px; vertical-align: middle;
+	padding: 5px; font-weight: normal;
+}
+
+.zc06info-table td {
+	border-right: 1px solid #000; padding: 30px 5px; vertical-align: middle;
+}
+
+/*职称考试及考核情况*/
+.zc08info-table {
+	border-top: 1px solid #000; border-left: 1px solid #000; border-top: 1px solid #000; width: 100%; text-align: center;
+	margin-top: 20px;
+}
+
+.zc08info-table th {
+	border-right: 1px solid #000; border-bottom: 1px solid #000; height: 40px; padding: 5px; vertical-align: middle;
+	padding: 5px; font-weight: normal;
+}
+
+.zc08info-table td {
+	border-right: 1px solid #000; border-bottom: 1px solid #000; padding: 5px; vertical-align: middle; height: 20px;
+}
+
+.opbtn {
+	width: 100%; margin: 20px 0px; text-align: center; font-size: 13px; color: #fff;
+}
+
+.btn-submit {
+	background: #6C95C9; outline: none; outline: none; border: 0; color: #fff; cursor: pointer; padding: 8px 20px;
+	margin-left: 30px; border: 0; color: #fff; cursor: pointer; padding: 8px 20px; margin-left: 20px;
+}
+
+.btn-submit:hover {
+	background: #3d85cc;
+}
+
+.btn-submit:active {
+	background: #c6c6c6
+}
+
+.btn-submit:disabled {
+	background: #c6c6c6
+}
+
+.btn-close {
+	margin-left: 0px; background: #62abf5;
+}
+
+.businessLicense {
+	width: 100%;
+}
+
+.serial-item {
+	font-size: 20px; line-height: 35px; padding: 5px 0;
+}
+
+.serial-number {
+	float: left;
+}
+
+.serial-content {
+	padding-left: 40px;
+}
+
+#trainee_jcqk div {
+	height: 30px;
+}

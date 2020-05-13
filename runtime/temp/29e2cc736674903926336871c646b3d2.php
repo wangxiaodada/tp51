@@ -1,0 +1,196 @@
+<?php /*a:1:{s:69:"E:\phpStudy\WWW\tp51\application\admin\view\modal\workexperience.html";i:1587608042;}*/ ?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>工作经历</title>
+</head>
+<link rel="stylesheet" href="/static/bootstrap/css/bootstrap.min.css">
+<script type="text/javascript" src="/static/jquery.min.js"></script>
+<script type="text/javascript" src="/static/bootstrap/js/bootstrap.js"></script>
+<script type="text/javascript" src="/static/layer/layer.js"></script>
+<link rel="stylesheet" href="/static/admin/css/all.css">
+<style type="text/css">
+    #table_2  td{
+        padding:0 20px;
+        text-align: center;
+    }
+</style>
+<body style="min-width: 1000px;width: 1195px">
+<div >
+    <h5>工作经历</h5>
+
+    <form id="myform" >
+        <table>
+            <input type="hidden" name="tb_we_id">
+            <tr>
+                <td style="width: 120px"><span style="color: red">* </span>工作单位：</td>
+                <td style="width: 270px"><input name="workunit" class="form-control" type="text"></td>
+                <td style="width: 120px"><span style="color: red">* </span>工作开始时间：</td>
+                <td style="width: 270px"><input  class="form-control" name="start_time" type="date" value=""></td>
+                <td style="width: 120px"><span style="color: red">* </span>工作结束时间：</td>
+                <td style="width: 270px"><input name="end_time" class="form-control"  type="date" value=""></td>
+            </tr>
+            <tr>
+                <td ><span style="color: red">* </span>从事何专业技术工 作 ：</td>
+                <td colspan="3"><textarea name="professional_work" class="form-control-plaintext"></textarea></td>
+                <td><span style="color: red">* </span>职务：</td>
+                <td ><textarea name="post" class="form-control-plaintext"></textarea></td>
+            </tr>
+        </table>
+        <br/>
+    </form>
+    <div style="height: 54px">
+        <div class="float-right bottom_div" >
+            <a href="<?php echo url('Modal/showTrainingExperience'); ?>?id=<?php echo htmlentities($uid); ?>"><button class="btn btn-info"> << 学习经历培训</button></a>
+            <button class="btn btn-info" id="submit_form">保存</button>
+            <button class="btn btn-danger" id="del">删除</button>
+            <a href="<?php echo url('Modal/showOldAchievement'); ?>?id=<?php echo htmlentities($uid); ?>"><button class="btn btn-info">任现职前主要工作业绩 >></button></a>
+        </div>
+    </div>
+    <div style="height: 50px;">
+        <table id="table_2" >
+            <tr bgcolor="#b2e2fa">
+                <td></td>
+                <td><input class="center" id="checked_all" type="checkbox"></td>
+                <td width="80px">修改</td>
+                <td style="width: 275px">工作单位</td>
+                <td style="width: 150px">工作开始时间</td>
+                <td style="width: 150px">工作结束时间</td>
+                <td style="width: 475px">从事何专业技术工作</td>
+                <td style="width: 125px">职务</td>
+            </tr>
+            <?php if($data != ""): foreach($data as $v): ?>
+            <tr >
+                <td>1</td>
+                <td><input class="center" name="checked" type="checkbox"></td>
+                <td><a href="#" name="bj" myid="<?php echo htmlentities($v['tb_we_id']); ?>" title="单机"><img width="20px" src="/static/user/img/edit.png" alt=""></a></td>
+                <td style="overflow: hidden"><?php echo htmlentities($v["workunit"]); ?></td>
+                <td><?php echo htmlentities($v["start_time"]); ?></td>
+                <td><?php echo htmlentities($v["end_time"]); ?></td>
+                <td><?php echo htmlentities($v["professional_work"]); ?></td>
+                <td><?php echo htmlentities($v["post"]); ?></td>
+            </tr>
+            <?php endforeach; ?>
+            <?php endif; ?>
+        </table>
+    </div>
+</div>
+</body>
+<script type="text/javascript">
+    $(function () {
+
+        function bianhao(){
+            $("#table_2 tr:gt(0)").each(function () {
+                $(this).children("td:eq(0)").text($(this).index())
+            })
+        }
+        bianhao();
+
+        $("textarea").each(function () {
+            $(this).css("border","1px solid #ced4da")
+            $(this).css("background","white")
+        })
+
+        //提交保存
+        $("#submit_form").click(function () {
+            var formdata = new FormData(document.getElementById("myform"));
+            $.ajax({
+                url:"<?php echo url('Modal/addOrUpdWorkExperience'); ?>?uid=<?php echo htmlentities($uid); ?>",
+                type:"post",
+                datatype:"json",
+                data:formdata,
+                cache: false,                      // 不缓存
+                processData: false,                // jQuery不要去处理发送的数据
+                contentType: false,                // jQuery不要去设置Content-Type请求头
+                success:function (data) {
+                    if(data["code"] == 0){
+                        layer.msg("权限不足");
+                        return false;
+                    }
+
+                    if(data["type"] == "add"){
+                        var str = "<tr >" +
+                            "<td>1</td>" +
+                            "<td><input class='center' name='checked' type='checkbox'></td>" +
+                            "<td><a href='#' name='bj' myid='"+data['where']['tb_we_id']+"' title='单机'><img width='20px' src='/static/user/img/edit.png' alt=''></a></td>" +
+                            "<td style='overflow: hidden'>"+data['data']['workunit']+"</td>" +
+                            "<td>"+data['data']['start_time']+"</td>" +
+                            "<td>"+data['data']['end_time']+"</td>" +
+                            "<td>"+data['data']['professional_work']+"</td>" +
+                            "<td>"+data['data']['post']+"</td>" +
+                            "</tr>";
+                        $("#table_2 tbody").append(str);
+                        bianhao();
+                        layer.msg("添加成功");
+                    }else if(data["type"] == "update"){
+                        layer.msg("修改成功");
+                        $("[name=bj]").each(function () {
+                            if($(this).attr("myid") == data["where"]["tb_we_id"]){
+                                var obj = $(this).parent();
+                                for (var i in data["data"]){
+                                    obj = obj.next();
+                                    obj.text(data["data"][i])
+                                }
+                            }
+                        })
+                    }
+                }
+            });
+        });
+
+        $("[name=bj]").click(function () {
+            $.ajax({
+                url:"<?php echo url('Modal/showWorkExperienceOne'); ?>",
+                type:"post",
+                datatype:"json",
+                data:{tb_we_id:$(this).attr("myid")},
+                success:function (data) {
+                    if(data["code"] == 0){
+                        layer.msg("权限不足");
+                        return false;
+                    }
+
+                    for(var i in data){
+                        $("[name="+i+"]").val(data[i]);
+                    }
+                }
+            });
+        });
+
+        //选中全部
+        $("#checked_all").click(function () {
+           $("[name=checked]").click();
+        });
+
+        //删除
+        $("#del").click(function () {
+            var ids = "";
+            $("[name=checked]:checked").each(function () {
+                ids = ids + "," + $(this).parent().next().children("a").attr("myid");
+            });
+            ids = ids.substr(1,ids.length);
+            layer.confirm("您确定要删除吗",{btn:["确定","取消"]},function () {
+                $.ajax({
+                    url:"<?php echo url('Modal/delWorkExperience'); ?>",
+                    type:"post",
+                    datatype:"json",
+                    data:{ids:ids},
+                    success:function (data) {
+                        if(data["code"] == 0){
+                            layer.msg("权限不足");
+                            return false;
+                        }
+
+                        if(data > 0){
+                            $("[name=checked]:checked").parent().parent().remove();
+                            layer.msg("删除完成");
+                            bianhao();
+                        }
+                    }
+                })
+            })
+        });
+    });
+</script>
+</html>

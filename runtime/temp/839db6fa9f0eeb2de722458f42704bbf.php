@@ -1,0 +1,356 @@
+<?php /*a:1:{s:64:"E:\phpStudy\WWW\tp51\application\admin\view\Index\Admin\all.html";i:1589255949;}*/ ?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>所有管理员</title>
+</head>
+<link rel="stylesheet" href="/static/bootstrap-3.3.7/css/bootstrap.min.css">
+<script type="text/javascript" src="/static/jquery.min.js"></script>
+<script type="text/javascript" src="/static/bootstrap-3.3.7/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="/static/layer/layer.js"></script>
+<link rel="stylesheet" href="/static/admin/css/all.css">
+<script type="text/javascript">
+    function showmodal(){
+        $("#myModal").modal("show");
+    }
+
+    function submit_form() {
+        var admin_name = $("#admin_name").val();
+        var post_id = $("#post_name").val();
+        var name = $("#name").val();
+        var password = $("#password").val();
+        if(name == ""){
+            layer.msg("账号不能为空");
+            return false;
+        }
+        if(post_id == ""){
+            layer.msg("请选择职位");
+            return false;
+        }
+        $.ajax({
+            url:"/IndexAdminAll/insertAdmin",
+            type:"post",
+            dataType:"json",
+            data:{admin_name:admin_name,post_id:post_id,name:name,password:password},
+            success:function (data) {
+                console.log(data);
+                if(typeof data["msg"] != "undefined"){
+                    layer.msg(data["msg"]);
+                }else if(data > 0){
+                    layer.msg("添加成功");
+                }
+            }
+        })
+    }
+</script>
+<body>
+<btn class="btn btn-info btn-sm" onclick="showmodal();" style="margin: 12px 0 0 12px">添加</btn>
+<table class="admin_table" width="100%">
+    <tr>
+        <td>编号</td>
+        <td>账号</td>
+        <td>名字</td>
+        <td>岗位</td>
+        <td>操作</td>
+    </tr>
+    <?php foreach($data as $v): ?>
+    <tr>
+        <td><?php echo htmlentities($v['id']); ?></td>
+        <td><?php echo htmlentities($v['admin_name']); ?></td>
+        <td><?php echo htmlentities($v['nick_name']); ?></td>
+        <td myid="<?php echo htmlentities($v['post_id']); ?>"><?php echo htmlentities($v['post_name']); ?></td>
+        <td>
+            <button name="seerole" myid="<?php echo htmlentities($v['id']); ?>" class="btn btn-xs btn-primary">查看权限</button>
+            <btn name="upd" class="btn btn-xs btn-primary">修改岗位</btn>
+            <btn name="updpwd" myid="<?php echo htmlentities($v['id']); ?>" class="btn btn-xs btn-primary">修改密码</btn>
+            <btn name="del" onclick="del(this);" class="btn btn-xs btn-danger">删除</btn>
+        </td>
+    </tr>
+    <?php endforeach; ?>
+</table>
+
+<!--//新增员工的模态框-->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog" style="width: 400px">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="myModalLabel">添加</h4>
+            </div>
+            <form id="from_modal">
+                <div style="width: 350px;margin: 10px auto" >
+                    账号：<input type="text" id="name" name="name" style="width: 300px;height: 33px;display: inline-block" class="form-control" placeholder="请输入账号">
+                </div>
+                <div style="width: 350px;margin: 10px auto" >
+                    姓名：<input type="text" id="admin_name" name="admin_name" style="width: 300px;height: 33px;display: inline-block" class="form-control" placeholder="请输入姓名">
+                </div>
+                <div style="width: 350px;margin: 10px auto" >
+                    密码：<input type="text" id="password" name="password" style="width: 300px;height: 33px;display: inline-block" class="form-control" placeholder="请输入密码">
+                </div>
+                <div style="width: 350px;margin: 10px auto" >
+                    岗位：
+                    <select name="post_name" id="post_name" style="width: 300px;height: 34px;display: inline-block" class="form-control" >
+                        <option value="">请选择</option>
+                        <?php foreach($post as $v): ?>
+                        <option value="<?php echo htmlentities($v['id']); ?>"><?php echo htmlentities($v['name']); ?></option>
+                        <?php endforeach; ?>
+                    </select>
+                </div>
+            </form>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                <button type="button" onclick="submit_form();" class="btn btn-primary">保存</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal -->
+</div>
+<!--新增员工 end-->
+
+<!--//修改员工岗位的模态框 start-->
+<div class="modal fade" id="myModal_update" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog" style="width: 400px">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="myModal_updateLabel">修改岗位</h4>
+            </div>
+            <form id="update_modal">
+                <div style="width: 350px;margin: 10px auto" >
+                    账号：<input type="text" id="updpostaccount" style="width: 300px;height: 33px;display: inline-block"  class="form-control">
+                </div>
+                <div style="width: 350px;margin: 10px auto" >
+                    姓名：<input type="text" id="updpostname" style="width: 300px;height: 33px;display: inline-block" class="form-control">
+                </div>
+                <div style="width: 350px;margin: 10px auto" >
+                    岗位：
+                    <select name="updpost_name"  style="width: 300px;height: 34px;display: inline-block" class="form-control" >
+                        <option value="">请选择</option>
+                        <?php foreach($post as $v): ?>
+                        <option value="<?php echo htmlentities($v['id']); ?>"><?php echo htmlentities($v['name']); ?></option>
+                        <?php endforeach; ?>
+                    </select>
+                </div>
+            </form>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                <button type="button" id="updpoststorage" admin_id="" class="btn btn-primary">保存</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal -->
+</div>
+<!--修改员工岗位 end-->
+
+<!--//修改密码的模态框 start-->
+<div class="modal fade" id="uploadPwd" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog" style="width: 400px">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="myModal_uploadPwd">修改密码</h4>
+            </div>
+            <form id="uploadPwd_form">
+                <input type="hidden" id="id" name="id" >
+                <div style="width: 350px;margin: 10px auto" >
+                    新密码：<input type="text" name="pwd01" style="width: 280px;height: 33px;display: inline-block"  class="form-control">
+                </div>
+                <div style="width: 350px;margin: 10px auto" >
+                    请确认：<input type="text" name="pwd02" style="width: 280px;height: 33px;display: inline-block" class="form-control">
+                </div>
+            </form>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                <button type="button" id="submit_update_pwd" class="btn btn-primary">保存</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal -->
+</div>
+<!--修改密码 end-->
+
+
+<!--//查看员工权限的模态框-->
+<div class="modal fade" id="roleModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog" style="width: 700px">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="roleModalLabel">权限</h4>
+            </div>
+            <form  class="form-inline" id="myform_modal" role="form" >
+                <input type="hidden" id="hidden_id" value="">
+                <ul>
+                <?php foreach($data_role as $v): ?>
+                    <li style="list-style: none;width: 300px;float: left" >
+                        <label >
+                            <input myid="<?php echo htmlentities($v['id']); ?>" name="checkbox" style="vertical-align:middle;" type="checkbox"  >
+                            <span style="vertical-align:middle;font-size: 13px"><?php echo htmlentities($v['name']); ?></span>
+                        </label>
+                    </li>
+                <?php endforeach; ?>
+                </ul>
+            </form>
+            <div class="modal-footer float-left" style="margin-top: 20px">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                <button type="button" id="storageNewRole" class="btn btn-primary">保存</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal -->
+</div>
+</body>
+<script type="text/javascript">
+    $(function () {
+        //去掉选择岗位下拉框中的空选项
+        $("#post_name").change(function () {
+            $(this).children("option").each(function () {
+                if($(this).text() == "请选择"){
+                    $(this).remove();
+                }
+            })
+        });
+
+        $("#myform_modal").css("height",Math.ceil("<?php echo htmlentities($countRole); ?>"/2)*39);
+
+        //不可删除当前登录的管理员
+        $("[name=del]").each(function () {
+            if($(this).parent().siblings().eq(0).text() == "<?php echo htmlentities(app('session')->get('admin.id')); ?>"){
+                $(this).attr("disabled",true);
+            }
+        });
+
+        //查看个人权限
+        $("[name=seerole]").click(function () {
+            var id = $(this).attr("myid");
+            $.ajax({
+                url:"<?php echo url('IndexAdminAll/selectRole'); ?>" ,
+                type:"post",
+                dataType: "json",
+                data:{id:id},
+                success:function (data) {
+                    $("[name=checkbox]").prop("checked",false);
+                    if(data != ""){
+                        $("[name=checkbox]").each(function () {
+                            for(var i in data["data"]){
+                                if(data["data"][i]["id"] == $(this).attr("myid")){
+                                    $(this).prop("checked",true);
+                                    continue;
+                                }
+                            }
+                        });
+                        $("#hidden_id").val(id);
+                        $("#roleModalLabel").text("个人权限 -- "+data["nick_name"]);
+                    }
+                }
+            });
+            $("#roleModal").modal("show");
+        });
+
+        //自定义权限
+        $("#storageNewRole").click(function () {
+            var ids = "";
+            $("[name=checkbox]:checked").each(function () {
+                 ids += "," + $(this).attr("myid");
+            });
+            ids = ids.substr(1,ids.length);
+
+            $.ajax({
+                url:"<?php echo url('IndexAdminAll/storageNewRole'); ?>",
+                type:"post",
+                dataType:"json",
+                data:{ids:ids,id:$("#hidden_id").val()},
+                success:function (data) {
+                    if(data > 0){
+                        layer.msg("自定义权限成功！");
+                    }
+                }
+            });
+        });
+
+        // 删除员工
+        $("[name=del]").click(function () {
+            var obj = $(this);
+            var id = obj.parent().siblings().eq(0).text();
+            if(id == "<?php echo htmlentities(app('session')->get('admin.id')); ?>"){
+                return false;
+            }
+            var adminname = obj.parent().siblings().eq(2).text();
+            layer.confirm("您确定要删除 "+adminname+" 吗？",function () {
+                $.ajax({
+                    url:"<?php echo url('IndexAdminAll/del'); ?>?id="+id,
+                    type:"post",
+                    datatype:"json",
+                    data:{},
+                    success:function (data) {
+                        if(data == 1 || data == "1"){
+                            layer.msg("删除完成");
+                            obj.parent().parent().remove();
+                        }
+                    }
+                })
+            })
+        });
+
+        //显示修改岗位模态框
+        $("[name=upd]").click(function () {
+            $("#myModal_update").modal("show");
+            $("#updpostaccount").val($(this).parent().prev().prev().prev().text());
+            $("#updpostname").val($(this).parent().prev().prev().text());
+            $("[name=updpost_name]").val($(this).parent().prev().attr("myid"));
+            console.log($(this).parent().prev().text())
+            $("#updpoststorage").attr("admin_id",$(this).parent().prev().prev().prev().prev().text())
+        });
+
+        //修改岗位
+        $("#updpoststorage").click(function () {
+            var url = "<?php echo url('IndexAdminAll/updatePost'); ?>?admin_id="+$(this).attr("admin_id");
+            var post_id = $("[name=updpost_name]").val();
+            $.ajax({
+                url:url,
+                type:"post",
+                dataType:"json",
+                data:{post_id:post_id},
+                success:function (data) {
+                    if(data > 0){
+                        layer.msg("修改成功")
+                        location.reload();
+                    }
+                }
+            })
+        })
+
+        //修改密码模态框打开
+        $("[name=updpwd]").click(function () {
+            var id = $(this).attr("myid");
+            $("#uploadPwd").modal("show");
+            $("#id").val(id);
+        })
+
+        //提交修改的密码
+        $("#submit_update_pwd").click(function () {
+            layer.confirm("您确定要修改吗",{btn:["确定","取消"]},function () {
+                var pwd_data = $("#uploadPwd_form").serialize();
+                $.ajax({
+                    url:"/updateAdminPwd",
+                    type:"post",
+                    dataType:"json",
+                    data:pwd_data,
+                    success:function (data) {
+                        if(data["code"] == 1){
+                            layer.msg(data["msg"]);
+                            $("#uploadPwd").modal("hide");
+                        }else if(data["code"] == 2){
+                            layer.msg(data["msg"]);
+                        }
+                    }
+                })
+            })
+        });
+
+        //修改密码模态框关闭后
+        $("#uploadPwd").on("hidden.bs.modal",function () {
+            //清空模态框中的值
+            $("#uploadPwd_form input").val("");
+        });
+
+    })
+</script>
+</html>

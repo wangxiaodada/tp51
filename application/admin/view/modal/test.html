@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>自定义下拉选择框</title>
+
+</head>
+<link rel="stylesheet" href="/static/admin/css/dropdown.css">
+<body>
+<div class="my-select-box" style="width:100px;">
+    <input type="text" list="aa">
+    <datalist id="aa">
+        <option label="44" value="汉族"></option>
+        <option label="33" value="满族"></option>
+        <option label="22" value="白族"></option>
+        <option label="11" value="藏族"></option>
+    </datalist>
+</div>
+
+<div class="my-select-box" style="width:100px;">
+    <input type="text" style="height: 20px;font-size: 12px" class="my-select-input" placeholder="可输入也可选择" maxlength="20" />
+    <ul class="my-select-list" >
+        <li data-value="汉族">汉族</li>
+        <li data-value="满族">满族</li>
+        <li data-value="白族">白族</li>
+        <li data-value="土族">土族</li>
+        <li data-value="藏族">藏族</li>
+    </ul>
+</div>
+<div style="height: 40px"></div>
+<div class="my-select-box">
+    <input type="text" class="my-select-input" name="" placeholder="可输入也可选择" maxlength="10" />
+    <ul class="my-select-list">
+        <li data-value="1">第一项</li>
+        <li data-value="2">第二项</li>
+        <li data-value="3">第三项</li>
+        <li data-value="4">第四项</li>
+        <li data-value="5">第5项</li>
+        <li data-value="6">第6项</li>
+        <li data-value="7">第7项</li>
+        <li data-value="8">第8项</li>
+        <li data-value="1">第一项</li>
+        <li data-value="2">第二项</li>
+        <li data-value="3">第三项</li>
+        <li data-value="4">第四项</li>
+        <li data-value="5">第5项</li>
+        <li data-value="6">第6项</li>
+        <li data-value="7">第7项</li>
+        <li data-value="8">第8项</li>
+        <li data-value="1">第一项</li>
+        <li data-value="2">第二项</li>
+        <li data-value="3">第三项</li>
+        <li data-value="4">第四项</li>
+        <li data-value="5">第5项</li>
+        <li data-value="6">第6项</li>
+        <li data-value="7">第7项</li>
+        <li data-value="8">第18项</li>
+    </ul>
+</div>
+<script type="text/javascript" src="/static/jquery.min.js"></script>
+<script type="text/javascript" src="/static/admin/js/dropdown.js"></script>
+</body>
+</html>
